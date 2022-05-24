@@ -1,0 +1,51 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+<div>
+    <input id="userName" name="userName" value="">
+</div>
+<div>
+    <input id="password" name="password" value="">
+</div>
+<div>
+    <input type="button" id="btnSave"  value="Sign in">
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+<script>
+    $(function() {
+        $("#btnSave").click(function () {
+            var username=$("#userName").val();
+            var password=$("#password").val();
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/authenticate",
+                contentType: "application/json;charset=UTF-8",
+                data:JSON.stringify({"username":username ,"password" : password}),
+                dataType: "json",
+                async: false,
+                error: function (request) {
+                    console.log("Connection error");
+                },
+                success: function (data) {
+                    //save token
+                    localStorage.setItem("token",data.token);
+
+
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

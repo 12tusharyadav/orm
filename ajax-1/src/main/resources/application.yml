@@ -1,0 +1,6 @@
+server:
+  port: 8086
+ 
+jwt:
+  header: Authorization
+  secret: javainuse
